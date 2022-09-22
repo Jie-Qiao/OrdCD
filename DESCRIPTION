@@ -1,0 +1,12 @@
+Package: OCD
+Type: Package
+Title: Ordinal Causal Discovery
+Version: 0.2.0
+Author: Yang Ni
+Maintainer: Yang Ni <yni@stat.tamu.edu>
+Description: Discover Causality for Ordinal Cateogrical Data with Greedy and  Exhaustive Search
+License: `use_mit_license()`
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.2
+Imports: gRbase, MASS, bnlearn, igraph
