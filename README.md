@@ -1,7 +1,7 @@
 
 # OCD
 
-OCD is an R package for discovering causality from observation ordinal categorical data, developed and maintained by Yang Ni at Texas A&M University.
+OCD is an R package for discovering causality from observational ordinal categorical data, developed and maintained by Yang Ni at Texas A&M University.
 
 The package can also be downloaded at https://web.stat.tamu.edu/~yni/files/OCD_0.2.0.tar.gz.
 
