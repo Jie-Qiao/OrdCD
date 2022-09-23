@@ -8,7 +8,7 @@ The package can also be downloaded at https://web.stat.tamu.edu/~yni/files/OCD_0
 
 #### Reference:  
 
-Ni, Y., & Mallick, B. (2022). [Ordinal Causal Discovery](https://proceedings.mlr.press/v180/ni22a/ni22a.pdf) *Proceedings of the 38th Conference on Uncertainty in Artificial Intelligence*, (UAI 2022), PMLR 180:1530–1540.
+Ni, Y., & Mallick, B. (2022). [Ordinal Causal Discovery.](https://proceedings.mlr.press/v180/ni22a/ni22a.pdf) *Proceedings of the 38th Conference on Uncertainty in Artificial Intelligence*, (UAI 2022), PMLR 180:1530–1540.
 
 
 ## A small simulation example
