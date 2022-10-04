@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions_v2.R
 \name{OCD}
 \alias{OCD}
-\title{Causal Discovery for Ordinal Cateogrical Data}
+\title{Causal Discovery for Ordinal Categorical Data}
 \usage{
 OCD(y, search = "greedy", ic = "bic", link = "probit", G = NULL, nstart = 1)
 }
@@ -20,10 +20,10 @@ OCD(y, search = "greedy", ic = "bic", link = "probit", G = NULL, nstart = 1)
 \item{nstart}{number of random graph initializations for the "greedy" search.}
 }
 \value{
-An estimated DAG adjacency matrix whose (i,j)th entry is 1 if j->i is present in the graph and 0 otherwise.
+A list with two elements, gam and ic_best. gam is an estimated DAG adjacency matrix whose (i,j)th entry is 1 if j->i is present in the graph and 0 otherwise. ic_best is the correponding information criterion value.
 }
 \description{
-Estimate a causal directed acyclic graph (DAG) for ordinal cateogrical data with greedy or exhaustive search.
+Estimate a causal directed acyclic graph (DAG) for ordinal categorical data with greedy or exhaustive search.
 }
 \examples{
 set.seed(2020)
