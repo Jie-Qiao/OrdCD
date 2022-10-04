@@ -11,4 +11,4 @@ LazyData: true
 RoxygenNote: 7.2.1
 Imports: gRbase, MASS, bnlearn, igraph, stats
 URL: https://github.com/nySTAT/OrdCD
-BugReports: https://github.com/nySTAT/OCD/issues
+BugReports: https://github.com/nySTAT/OrdCD/issues
