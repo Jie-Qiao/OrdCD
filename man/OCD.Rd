@@ -38,7 +38,7 @@ Estimate a causal directed acyclic graph (DAG) for ordinal categorical data with
 \examples{
 set.seed(2020)
 n=1000 #sample size
-q=5 #number of nodes
+q=3 #number of nodes
 y = u = matrix(0,n,q)
 u[,1] = 4*rnorm(n)
 y[,1] = (u[,1]>1) + (u[,1]>2)
@@ -47,7 +47,7 @@ for (j in 2:q){
   y[,j]=(u[,j]>1) + (u[,j]>2)
 }
 A=matrix(0,q,q) #true DAG adjacency matrix
-A[2,1]=A[3,2]=A[4,3]=A[5,4]=1
+A[2,1]=A[3,2]=1
 y=as.data.frame(y)
 for (j in 1:q){
   y[,j]=as.factor(y[,j])
