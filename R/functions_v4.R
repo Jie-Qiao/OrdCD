@@ -1076,7 +1076,7 @@ OCD = function(y,
 #' time3=proc.time()
 #' G3=OrdCD(y,boot=10) #estimated DAG adjacency matrix with bootstrapping
 #' time3=proc.time() - time3
-#' G_avg = matrix(colMeans(matrix(unlist(G3),nrow=q^2+1,byrow=TRUE))[1:(q^2)],q,q)
+#' G_avg = matrix(colMeans(matrix(unlist(G3),nrow=q^2+1,byrow=TRUE))[1:(q^2)],q,q) #average over boostrap samples
 #' print(G_avg) #display the estimated adjacency averaged over 10 bootstrap samples
 #' print(time3[3]) #elapsed time
 #'}
