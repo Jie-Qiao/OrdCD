@@ -19,7 +19,21 @@ admissible_rev = function(i, j, gam_short_old) {
   }
 }
 
-mypolr = function(formula, data, ic, method, nq_y, nq_x) {
+.mypolr_noparent = function(y,method,plor=TRUE,ic="bic"){
+  if(plor){
+    fit=MASS::polr(y~1, method = method)
+  }else{
+    fit=stats::glm(y~1, family = stats::binomial(link = method))
+  }
+  if(ic=="bic"){
+    return(stats::BIC(fit))
+  }
+  if(ic=="aic"){
+    return(stats::AIC(fit))
+  }
+}
+mypolr_noparent<-memoise::memoise(.mypolr_noparent)
+.mypolr = function(formula, data, ic, method, nq_y, nq_x) {
   boolFalse = FALSE
   if (nq_y > 2) {
     if (ic == "bic") {
@@ -135,7 +149,7 @@ mypolr = function(formula, data, ic, method, nq_y, nq_x) {
   }
   return(IC)
 }
-
+mypolr<-memoise::memoise(.mypolr)
 
 
 oBN_greedy = function(y,
@@ -190,9 +204,9 @@ oBN_greedy = function(y,
         )
       } else{
         if (nq[i] > 2) {
-          ic_best[i] = stats::BIC(MASS::polr(y[, i] ~ 1, method = method))
+          ic_best[i] = mypolr_noparent(y[, i],method=method,plor=TRUE,ic="bic")
         } else{
-          ic_best[i] = stats::BIC(stats::glm(y[, i] ~ 1, family = stats::binomial(link = method)))
+          ic_best[i] = mypolr_noparent(y[, i],method=method,plor=FALSE,ic="bic")
         }
       }
     }
@@ -222,9 +236,9 @@ oBN_greedy = function(y,
                 )
               } else{
                 if (nq[i] > 2) {
-                  ic_best_new = stats::BIC(MASS::polr(y[, i] ~ 1, method = method))
+                  ic_best_new = mypolr_noparent(y[, i],method=method,plor=TRUE,ic="bic")
                 } else{
-                  ic_best_new = stats::BIC(stats::glm(y[, i] ~ 1, family = stats::binomial(link = method)))
+                  ic_best_new = mypolr_noparent(y[, i],method=method,plor=FALSE,ic="bic")
                 }
               }
               ic_improv_new = ic_best[i] - ic_best_new
@@ -248,9 +262,9 @@ oBN_greedy = function(y,
                 )
               } else{
                 if (nq[i] > 2) {
-                  ic_best_new = stats::BIC(MASS::polr(y[, i] ~ 1, method = method))
+                  ic_best_new = mypolr_noparent(y[, i],method=method,plor=TRUE,ic="bic")
                 } else{
-                  ic_best_new = stats::BIC(stats::glm(y[, i] ~ 1, family = stats::binomial(link = method)))
+                  ic_best_new = mypolr_noparent(y[, i],method=method,plor=FALSE,ic="bic")
                 }
               }
               ic_improv_new = ic_best[i] - ic_best_new
@@ -282,9 +296,9 @@ oBN_greedy = function(y,
               )
             } else{
               if (nq[i] > 2) {
-                ic_rev_best_new[1] = stats::BIC(MASS::polr(y[, i] ~ 1, method = method))
+                ic_rev_best_new[1] = mypolr_noparent(y[, i],method=method,plor=TRUE,ic="bic")
               } else{
-                ic_rev_best_new[1] = stats::BIC(stats::glm(y[, i] ~ 1, family = stats::binomial(link = method)))
+                ic_rev_best_new[1] = mypolr_noparent(y[, i],method=method,plor=FALSE,ic="bic")
               }
             }
             if (gam_new[ind_q[i, j], i] > 0) {
@@ -354,9 +368,9 @@ oBN_greedy = function(y,
         )
       } else{
         if (nq[i] > 2) {
-          ic_best[i] = stats::AIC(MASS::polr(y[, i] ~ 1, method = method))
+          ic_best[i] = mypolr_noparent(y[, i],method=method,plor=TRUE,ic="aic")
         } else{
-          ic_best[i] = stats::AIC(stats::glm(y[, i] ~ 1, family = stats::binomial(link = method)))
+          ic_best[i] = mypolr_noparent(y[, i],method=method,plor=FALSE,ic="aic")
         }
       }
     }
@@ -386,9 +400,9 @@ oBN_greedy = function(y,
                 )
               } else{
                 if (nq[i] > 2) {
-                  ic_best_new = stats::AIC(MASS::polr(y[, i] ~ 1, method = method))
+                  ic_best_new = mypolr_noparent(y[, i],method=method,plor=TRUE,ic="aic")
                 } else{
-                  ic_best_new = stats::AIC(stats::glm(y[, i] ~ 1, family = stats::binomial(link = method)))
+                  ic_best_new = mypolr_noparent(y[, i],method=method,plor=FALSE,ic="aic")
                 }
               }
               ic_improv_new = ic_best[i] - ic_best_new
@@ -412,9 +426,9 @@ oBN_greedy = function(y,
                 )
               } else{
                 if (nq[i] > 2) {
-                  ic_best_new = stats::AIC(MASS::polr(y[, i] ~ 1, method = method))
+                  ic_best_new = mypolr_noparent(y[, i],method=method,plor=TRUE,ic="aic")
                 } else{
-                  ic_best_new = stats::AIC(stats::glm(y[, i] ~ 1, family = stats::binomial(link = method)))
+                  ic_best_new = mypolr_noparent(y[, i],method=method,plor=FALSE,ic="aic")
                 }
               }
               ic_improv_new = ic_best[i] - ic_best_new
@@ -446,9 +460,9 @@ oBN_greedy = function(y,
               )
             } else{
               if (nq[i] > 2) {
-                ic_rev_best_new[1] = stats::AIC(MASS::polr(y[, i] ~ 1, method = method))
+                ic_rev_best_new[1] = mypolr_noparent(y[, i],method=method,plor=TRUE,ic="aic")
               } else{
-                ic_rev_best_new[1] = stats::AIC(stats::glm(y[, i] ~ 1, family = stats::binomial(link = method)))
+                ic_rev_best_new[1] = mypolr_noparent(y[, i],method=method,plor=FALSE,ic="aic")
               }
             }
             if (gam_new[ind_q[i, j], i] > 0) {
@@ -559,9 +573,9 @@ oBN_greedy_CPDAG = function(y,
         )
       } else{
         if (nq[i] > 2) {
-          ic_best[i] = stats::BIC(MASS::polr(y[, i] ~ 1, method = method))
+          ic_best[i] = mypolr_noparent(y[, i],method=method,plor=TRUE,ic="bic")
         } else{
-          ic_best[i] = stats::BIC(stats::glm(y[, i] ~ 1, family = stats::binomial(link = method)))
+          ic_best[i] = mypolr_noparent(y[, i],method=method,plor=FALSE,ic="bic")
         }
       }
     }
@@ -593,9 +607,9 @@ oBN_greedy_CPDAG = function(y,
                 )
               } else{
                 if (nq[i] > 2) {
-                  ic_rev_best_new[1] = stats::BIC(MASS::polr(y[, i] ~ 1, method = method))
+                  ic_rev_best_new[1] = mypolr_noparent(y[, i],method=method,plor=TRUE,ic="bic")
                 } else{
-                  ic_rev_best_new[1] = stats::BIC(stats::glm(y[, i] ~ 1, family = stats::binomial(link = method)))
+                  ic_rev_best_new[1] = mypolr_noparent(y[, i],method=method,plor=FALSE,ic="bic")
                 }
               }
               if (gam_new[ind_q[[i]][j], i] > 0) {
@@ -657,9 +671,9 @@ oBN_greedy_CPDAG = function(y,
         )
       } else{
         if (nq[i] > 2) {
-          ic_best[i] = stats::AIC(MASS::polr(y[, i] ~ 1, method = method))
+          ic_best[i] = mypolr_noparent(y[, i],method=method,plor=TRUE,ic="aic")
         } else{
-          ic_best[i] = stats::AIC(stats::glm(y[, i] ~ 1, family = stats::binomial(link = method)))
+          ic_best[i] = mypolr_noparent(y[, i],method=method,plor=FALSE,ic="aic")
         }
       }
     }
@@ -691,9 +705,9 @@ oBN_greedy_CPDAG = function(y,
                 )
               } else{
                 if (nq[i] > 2) {
-                  ic_rev_best_new[1] = stats::AIC(MASS::polr(y[, i] ~ 1, method = method))
+                  ic_rev_best_new[1] = mypolr_noparent(y[, i],method=method,plor=TRUE,ic="aic")
                 } else{
-                  ic_rev_best_new[1] = stats::AIC(stats::glm(y[, i] ~ 1, family = stats::binomial(link = method)))
+                  ic_rev_best_new[1] = mypolr_noparent(y[, i],method=method,plor=FALSE,ic="aic")
                 }
               }
               if (gam_new[ind_q[[i]][j], i] > 0) {
@@ -914,9 +928,9 @@ oBN_exhaust = function(y,
         gam_tmp = gam[i,]
         if (sum(gam_tmp) == 0) {
           if (nl[i] == 2) {
-            IC[m] = IC[m] + stats::BIC(stats::glm(y[, i] ~ 1, family = stats::binomial(link = method)))
+            IC[m] = IC[m] + mypolr_noparent(y[, i],method=method,plor=FALSE,ic="bic")
           } else{
-            IC[m] = IC[m] + stats::BIC(MASS::polr(y[, i] ~ 1, method = method))
+            IC[m] = IC[m] + mypolr_noparent(y[, i],method=method,plor=TRUE,ic="bic")
           }
         } else{
           if (nl[i] == 2) {
@@ -957,9 +971,9 @@ oBN_exhaust = function(y,
         gam_tmp = gam[i,]
         if (sum(gam_tmp) == 0) {
           if (nl[i] == 2) {
-            IC[m] = IC[m] + stats::AIC(stats::glm(y[, i] ~ 1, family = stats::binomial(link = method)))
+            IC[m] = IC[m] + mypolr_noparent(y[, i],method=method,plor=FALSE,ic="aic")
           } else{
-            IC[m] = IC[m] + stats::AIC(MASS::polr(y[, i] ~ 1, method = method))
+            IC[m] = IC[m] + mypolr_noparent(y[, i],method=method,plor=TRUE,ic="aic")
           }
         } else{
           if (nl[i] == 2) {
